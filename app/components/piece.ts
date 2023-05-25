@@ -18,7 +18,10 @@ export default class Piece {
 
     display(p: p5Types) {
         p.fill(this.color[0], this.color[1], this.color[2]);
-        p.stroke(0);
-        p.rect(this.x, this.y, this.size, this.size);
+        p.beginShape();
+        p.vertex(this.x + 25, this.y + 10);
+        p.vertex(this.x + 40, this.y + 40);
+        p.vertex(this.x + 10, this.y + 40);
+        p.endShape(p.CLOSE);
     }
 }

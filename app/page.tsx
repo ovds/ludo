@@ -2,7 +2,8 @@
 
 import dynamic from 'next/dynamic'
 import p5Types from "p5";
-import Piece from "@/app/components/piece"; //Import this for typechecking and intellisense
+import Piece from "@/app/components/piece";
+import Dice from "@/app/components/Dice";
 
 // Will only import `react-p5` on client-side
 const Sketch = dynamic(() => import('react-p5').then((mod) => mod.default), {
@@ -14,6 +15,8 @@ export default function Home() {
     let y = 50;
 
     let width: number = 300;
+
+    const pieces: Piece[] = [];
 
     const preload = (p5: p5Types) => {
 
@@ -88,30 +91,35 @@ export default function Home() {
         // Draw the pieces
         for (let i = 0; i < 4; i++) {
             let piece = new Piece(space/3 + (i % 2 == 0? 0 : space), space/3 + (i < 2? 0 : space), [210, 43, 43]);
-            piece.display(p5);
+            pieces.push(piece);
         }
 
         for (let i = 0; i < 4; i++) {
             let piece = new Piece(space/3 + (i % 2 == 0? 0 : space), space/3 + (i < 2? space + width : space * 2 + width), [100, 149, 237]);
-            piece.display(p5);
+            pieces.push(piece);
         }
 
         for (let i = 0; i < 4; i++) {
             let piece = new Piece(space/3 + (i % 2 == 0? space + width : space * 2 + width), space/3 + (i < 2? 0 : space), [80, 200, 120]);
-            piece.display(p5);
+            pieces.push(piece);
         }
 
         for (let i = 0; i < 4; i++) {
             let piece = new Piece(space/3 + (i % 2 == 0? space + width : space * 2 + width), space/3 + (i < 2? space + width : space * 2 + width), [250, 218, 94]);
-            piece.display(p5);
+            pieces.push(piece);
+        }
+
+        for (let i = 0; i < pieces.length; i++) {
+            pieces[i].display(p5);
         }
     };
 
     return (
-        <div className={"w-screen h-screen flex justify-center items-center bg-slate-800"}>
+        <div className={"w-screen h-screen flex justify-center items-center bg-slate-800 gap-10"}>
             <div className={"w-min h-min rounded-2xl overflow-clip"}>
                 <Sketch preload={preload} setup={setup} draw={draw} />
             </div>
+            <Dice sides={6} />
         </div>
     )
 }
