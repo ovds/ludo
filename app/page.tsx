@@ -157,24 +157,24 @@ export default function Home() {
 
             for (let i = 0; i < pieces.length; i++) {
                 if (turn == 0 && rolled) {
-                    pieces[0][i].displayOnTurn(p5);
+                    (!pieces[0][i].isHome) ? pieces[0][i].displayOnTurn(p5) : pieces[0][i].displayHome(p5);
                 } else {
-                    pieces[0][i].display(p5);
+                    (!pieces[0][i].isHome) ? pieces[0][i].display(p5) : pieces[0][i].displayHome(p5);
                 }
                 if (turn == 1 && rolled) {
-                    pieces[1][i].displayOnTurn(p5);
+                    (!pieces[1][i].isHome) ? pieces[1][i].displayOnTurn(p5) : pieces[1][i].displayHome(p5);
                 } else {
-                    pieces[1][i].display(p5);
+                    (!pieces[1][i].isHome) ? pieces[1][i].display(p5) : pieces[1][i].displayHome(p5);
                 }
                 if (turn == 2 && rolled) {
-                    pieces[2][i].displayOnTurn(p5);
+                    (!pieces[2][i].isHome) ? pieces[2][i].displayOnTurn(p5) : pieces[2][i].displayHome(p5);
                 } else {
-                    pieces[2][i].display(p5);
+                    (!pieces[2][i].isHome) ? pieces[2][i].display(p5) : pieces[2][i].displayHome(p5);
                 }
                 if (turn == 3 && rolled) {
-                    pieces[3][i].displayOnTurn(p5);
+                    (!pieces[3][i].isHome) ? pieces[3][i].displayOnTurn(p5) : pieces[3][i].displayHome(p5);
                 } else {
-                    pieces[3][i].display(p5);
+                    (!pieces[3][i].isHome) ? pieces[3][i].display(p5) : pieces[3][i].displayHome(p5);
                 }
             }
         }

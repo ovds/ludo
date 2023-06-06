@@ -10,6 +10,8 @@ export default class Piece {
     private place = -1;
     private strokeWeight = 2;
     private strokeIncrease = 0.05;
+    private goingHome = false;
+    public isHome = false;
     isOut = false;
     private readonly colour: string;
     constructor(x: number, y: number, color: Array<number>, colour: string) {
@@ -20,10 +22,60 @@ export default class Piece {
     }
 
     move(n: number, board: number[][], pieces: Piece[][]) {
+        if (this.isHome) return;
         if (this.place == -1 && n == 6) { // if piece is not on board and 6 is rolled
             this.bringOut(board);
         } else if (this.place != -1) { // if piece is on board
             this.place += n;
+            if (this.colour == "red" && this.place > 50) {
+                if (this.place >= 56) {
+                    this.x = 6;
+                    this.y = 7;
+                    this.isHome = true;
+                    return;
+                } else {
+                    this.x = (this.place - 50);
+                    this.y = 7;
+                    this.goingHome = true;
+                    return;
+                }
+            } else if (this.colour == "blue" && (this.goingHome || (this.place > 37 && (this.place - n) < 38))) {
+                if (this.place >= 43) {
+                    this.x = 7;
+                    this.y = 8;
+                    this.isHome = true;
+                    return;
+                } else {
+                    this.x = 7;
+                    this.y = 15 - (this.place - 36);
+                    this.goingHome = true;
+                    return;
+                }
+            } else if (this.colour == "yellow" && (this.goingHome || (this.place > 24 && (this.place - n) < 25))) {
+                if (this.place >= 30) {
+                    this.x = 8;
+                    this.y = 7;
+                    this.isHome = true;
+                    return;
+                } else {
+                    this.x = 15 - (this.place - 23);
+                    this.y = 7;
+                    this.goingHome = true;
+                    return;
+                }
+            } else if (this.colour == "green" && (this.goingHome || (this.place > 11 && (this.place - n) < 12))) {
+                if (this.place >= 17) {
+                    this.x = 7;
+                    this.y = 6;
+                    this.isHome = true;
+                    return;
+                } else {
+                    this.x = 7;
+                    this.y = (this.place - 11);
+                    this.goingHome = true;
+                    return;
+                }
+            }
             if (this.place > 51) this.place -= 52;
             /* for (let i = 0; i < pieces.length; i++) {
                 for (let j = 0; j < pieces[i].length; j++) {
@@ -83,6 +135,11 @@ export default class Piece {
         p.vertex(this.x * 50 + 10 + this.offset, this.y * 50 + 40);
         p.endShape(p.CLOSE);
         p.noStroke()
+    }
+
+    displayHome(p: p5Types) {
+        p.fill(this.color);
+        p.circle(this.x * 50 + 25 + this.offset, this.y * 50 + 25, this.size);
     }
 
     bringOut(board: number[][]) {
